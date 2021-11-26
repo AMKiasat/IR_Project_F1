@@ -18,23 +18,16 @@ def main():
     my_normalizer = Normalizer(statistical_space_correction=True)
     my_tokenizer = Tokenizer()
     my_stemmer = FindStems()
-
-    for i in x:
-        normalized.append(my_normalizer.normalize(i))
-
     words = []
-    for i in normalized:
-        words.append(my_tokenizer.tokenize_words(my_normalizer.normalize(i)))
-    # print(words[0])
-
     stemmed = []
-    for i in range(len(words)):
+    for i in x:
+        words = my_tokenizer.tokenize_words(my_normalizer.normalize(my_normalizer.normalize(i)))
         tmp = []
-        for j in words[i]:
+        for j in words:
             tmp.append(my_stemmer.convert_to_stem(j))
         stemmed.append(tmp)
-    print(stemmed[0])
-
+        print(stemmed.pop())
+    
 
 if __name__ == '__main__':
     main()
