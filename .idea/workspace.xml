@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d016585-e44a-48e5-b4ff-80667c3c52b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/IR1_7k_news.xlsx" beforeDir="false" afterPath="$PROJECT_DIR$/IR1_7k_news.xlsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
