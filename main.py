@@ -5,8 +5,6 @@ from parsivar import Normalizer
 from parsivar import Tokenizer
 from parsivar import SpellCheck
 from parsivar import FindStems
-from pandas import ExcelWriter
-from pandas import ExcelFile
 
 
 # 'IR1_7k_news.xlsx'
@@ -44,7 +42,7 @@ def main():
         stemmed.append(tmp)
         print(tmp)
     question_words = my_tokenizer.tokenize_words(my_normalizer.normalize(my_normalizer.normalize(question)))
-    clean_q_words= []
+    clean_q_words = []
     for i in range(len(question_words)):
         if stop_words.count(question_words[i]) == 0:
             clean_q_words.append(my_stemmer.convert_to_stem(question_words[i]))
@@ -53,20 +51,46 @@ def main():
         for j in range(len(unique)):
             if clean_q_words[i] == unique[j]:
                 q_w_locations.append(position[j])
-                print(position[j])
+                # print(position[j])
     a = []
+    print("yes ", clean_q_words, q_w_locations)
     if len(clean_q_words) == 1:
         for i in range(len(q_w_locations[0])):
-            if(a.count(q_w_locations[0][i][0]) == 0):
+            if a.count(q_w_locations[0][i][0]) == 0:
                 print(title[q_w_locations[0][i][0]])
                 a.append(q_w_locations[0][i][0])
-    # for i in range(len(q_w_locations)):
-    #     for j in range(len(q_w_locations[i])):
-    #         for k in range(i,len(q_w_locations)):
-    #             for l in range(len(q_w_locations[k])):
-    #                 if (q_w_locations[i][j][0] == q_w_locations[k][l][0] and q_w_locations[i][j][1] + 1 == q_w_locations[k][l][1])
-
+        return
+    answers = [q_w_locations]
+    for h in range(len(clean_q_words) - 1):
+        t = []
+        print(h)
+        for i in range(len(answers[h]) - 1):
+            tmp = []
+            for j in range(len(answers[h][i])):
+                for l in range(len(answers[h][i + 1])):
+                    if (answers[h][i][j][0] == answers[h][i + 1][l][0] and answers[h][i][j][1] + 1 == answers[h][i + 1][l][1]):
+                        tmp.append(answers[h][i + 1][l])
+                        print(answers[h][i + 1][l])
+                        # print(stemmed[answers[h][i + 1][l][0]][answers[h][i + 1][l][1]])
+            t.append(tmp)
+            print(t)
+        answers.append(t)
+        print("shod")
+        h = h + 1
+    printed_titles = []
+    print(len(answers))
+    for i in range((len(answers) - 1), -1, -1):
+        print(i)
+        for j in range(len(answers[i])):
+            for k in range(len(answers[i][j])):
+                if len(answers[i]) != 0:
+                    if printed_titles.count(answers[i][j][k][0]) == 0:
+                        print(title[answers[i][j][k][0]])
+                        printed_titles.append(answers[i][j][k][0])
 
 
 if __name__ == '__main__':
     main()
+
+# انتهای پیام
+# براق محمد جواد مداح
