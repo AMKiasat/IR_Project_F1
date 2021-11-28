@@ -46,10 +46,6 @@ def main():
             # stemmed.append(tmp)
         with open('position.pickle', 'wb') as handle:
             pickle.dump(position, handle, protocol=pickle.HIGHEST_PROTOCOL)
-
-    print(position['سلام'])
-    print(position['خوبی'])
-
     question_words = my_tokenizer.tokenize_words(my_normalizer.normalize(question))
     clean_q_words = []
     q_w_locations = []
@@ -58,41 +54,49 @@ def main():
             b = my_stemmer.convert_to_stem(question_words[i])
             q_w_locations.append(position[b])
             clean_q_words.append(b)
-
-    for key in q_w_locations[0].keys():
-        print(title[key])
-    # print(q_w_locations[0])
-    # print(q_w_locations[1])
-    # if len(q_w_locations) == 1:
-    #     print(title[q_w_locations.keys(0)])
-    #     return
-    # answers = [q_w_locations]
-    # for h in range(len(clean_q_words) - 1):
-    #     t = []
-    #     print(h)
-    #     for i in range(len(answers[h]) - 1):
-    #         tmp = []
-    #         for j in range(len(answers[h][i])):
-    #             for l in range(len(answers[h][i + 1])):
-    #                 if (answers[h][i][j][0] == answers[h][i + 1][l][0] and answers[h][i][j][1] + 1 == answers[h][i + 1][l][1]):
-    #                     tmp.append(answers[h][i + 1][l])
-    #                     print(answers[h][i + 1][l])
-    #                     # print(stemmed[answers[h][i + 1][l][0]][answers[h][i + 1][l][1]])
-    #         t.append(tmp)
-    #         print(t)
-    #     answers.append(t)
-    #     print("shod")
-    #     h = h + 1
-    # printed_titles = []
+    # print(clean_q_words)
+    if len(q_w_locations) == 1:
+        for key in q_w_locations[0].keys():
+            print(title[key])
+        return
+    answers = [q_w_locations]
+    # print(answers)
+    for h in range(len(clean_q_words) - 1):
+        t = []
+        # print(h)
+        for i in range(len(answers[h]) - 1):
+            tmp = []
+            f_keys = []
+            s_keys = []
+            for key in answers[h][i].keys():
+                f_keys.append(key)
+            for key in answers[h][i + 1].keys():
+                s_keys.append(key)
+            new_docs = dict()
+            for j in f_keys:
+                for l in s_keys:
+                    if j == l:
+                        new_pos = []
+                        for p1 in answers[h][i].get(j):
+                            for p2 in answers[h][i + 1].get(l):
+                                if p1 + 1 == p2:
+                                    new_pos.append(p2)
+                        new_docs[j] = new_pos
+            t.append(new_docs)
+        answers.append(t)
+        # print(t)
+    # print(answers[0])
+    # print(answers[1])
+    printed_titles = set()
     # print(len(answers))
-    # for i in range((len(answers) - 1), -1, -1):
-    #     print(i)
-    #     for j in range(len(answers[i])):
-    #         for k in range(len(answers[i][j])):
-    #             if len(answers[i]) != 0:
-    #                 if printed_titles.count(answers[i][j][k][0]) == 0:
-    #                     print(title[answers[i][j][k][0]])
-    #                     printed_titles.append(answers[i][j][k][0])
+    for i in range((len(answers) - 1), -1, -1):
+        # print(i)
+        for j in range(len(answers[i])):
+            for k in answers[i][j].keys():
+                if len(answers[i]) != 0:
+                    if k not in printed_titles:
+                        print(title[k])
+                        printed_titles.add(k)
 
 
 if __name__ == '__main__':
@@ -100,3 +104,5 @@ if __name__ == '__main__':
 
 # انتهای پیام
 # براق محمد جواد مداح
+# بین‌الملل
+# تیم فوتبال استقلال با برتری
